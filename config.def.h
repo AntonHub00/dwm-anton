@@ -1,17 +1,19 @@
 /* See LICENSE file for copyright and license details. */
 
+/* Library for media keys (fn keys) */
+#include <X11/XF86keysym.h>
+
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char *fonts[]          = { "fira code:size=10" };
+static const char col_gray1[]       = "#0A0F14";
+static const char col_gray2[]       = "#10151B";
+static const char col_gray3[]       = "#98D1CE";
+static const char col_gray4[]       = "#0A0F14";
+static const char col_cyan[]        = "#26A98B";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -27,8 +29,7 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+    { NULL,       NULL,       NULL,       0,            0,       -1 },
 };
 
 /* layout(s) */
@@ -38,13 +39,13 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "[T]",      tile },    /* first entry is default */
+	{ "[F]",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
 
 /* key definitions */
-#define MODKEY Mod1Mask
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -52,12 +53,20 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/zsh", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *dmenucmd[] = { "dmenu_run", NULL };
+static const char *termcmd[]  = { "kitty", NULL };
+static const char *suspend[]   = { "/usr/bin/systemctl", "suspend", NULL };
+static const char *upvol[]   = { "/usr/bin/amixer", "-q", "set", "Master", "10%+", "unmute", NULL };
+static const char *downvol[] = { "/usr/bin/amixer", "-q", "set", "Master", "10%-", "unmute", NULL };
+static const char *mutevol[] = { "/usr/bin/amixer", "-q", "set", "Master", "toggle", NULL };
+static const char *mutemicvol[] = { "/usr/bin/amixer", "-q", "set", "Capture", "toggle", NULL };
+static const char *upbright[]   = { "/usr/bin/xbacklight", "-inc", "10", NULL };
+static const char *downbright[]   = { "/usr/bin/xbacklight", "-dec", "10", NULL };
+static const char *print[]   = { "/usr/bin/gnome-screenshot", "-i", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -94,6 +103,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_s,     spawn,     {.v = suspend } },
+	{ 0,        XF86XK_AudioRaiseVolume,      spawn,     {.v = upvol   } },
+	{ 0,        XF86XK_AudioLowerVolume,      spawn,     {.v = downvol } },
+	{ 0,        XF86XK_AudioMute,             spawn,     {.v = mutevol } },
+	{ 0,        XF86XK_AudioMicMute,          spawn,     {.v = mutemicvol } },
+	{ 0,        XF86XK_MonBrightnessUp,       spawn,     {.v = upbright } },
+	{ 0,        XF86XK_MonBrightnessDown,     spawn,     {.v = downbright } },
+	{ 0,        XK_Print,                     spawn,     {.v = print } },
 };
 
 /* button definitions */
