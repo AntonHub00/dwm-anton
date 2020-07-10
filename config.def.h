@@ -57,22 +57,22 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
-static const char *suspend[]   = { "/usr/bin/systemctl", "suspend", NULL };
-static const char *upvol[]   = { "/usr/bin/amixer", "-q", "set", "Master", "10%+", "unmute", NULL };
-static const char *downvol[] = { "/usr/bin/amixer", "-q", "set", "Master", "10%-", "unmute", NULL };
-static const char *mutevol[] = { "/usr/bin/amixer", "-q", "set", "Master", "toggle", NULL };
-static const char *mutemicvol[] = { "/usr/bin/amixer", "-q", "set", "Capture", "toggle", NULL };
-static const char *upbright[]   = { "/usr/bin/xbacklight", "-inc", "10", NULL };
-static const char *downbright[]   = { "/usr/bin/xbacklight", "-dec", "10", NULL };
-static const char *print[]   = { "/usr/bin/gnome-screenshot", "-i", NULL };
+static const char *suspendcmd[]   = { "/usr/bin/systemctl", "suspend", NULL };
+static const char *upvolcmd[]   = { "/usr/bin/amixer", "-q", "set", "Master", "10%+", "unmute", NULL };
+static const char *downvolcmd[] = { "/usr/bin/amixer", "-q", "set", "Master", "10%-", "unmute", NULL };
+static const char *mutevolcmd[] = { "/usr/bin/amixer", "-q", "set", "Master", "toggle", NULL };
+static const char *mutemicvolcmd[] = { "/usr/bin/amixer", "-q", "set", "Capture", "toggle", NULL };
+static const char *upbrightcmd[]   = { "/usr/bin/xbacklight", "-inc", "10", NULL };
+static const char *downbrightcmd[]   = { "/usr/bin/xbacklight", "-dec", "10", NULL };
+static const char *printcmd[]   = { "/usr/bin/gnome-screenshot", "-i", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -81,7 +81,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY,                       XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -103,14 +103,14 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ MODKEY|ShiftMask,             XK_s,     spawn,     {.v = suspend } },
-	{ 0,        XF86XK_AudioRaiseVolume,      spawn,     {.v = upvol   } },
-	{ 0,        XF86XK_AudioLowerVolume,      spawn,     {.v = downvol } },
-	{ 0,        XF86XK_AudioMute,             spawn,     {.v = mutevol } },
-	{ 0,        XF86XK_AudioMicMute,          spawn,     {.v = mutemicvol } },
-	{ 0,        XF86XK_MonBrightnessUp,       spawn,     {.v = upbright } },
-	{ 0,        XF86XK_MonBrightnessDown,     spawn,     {.v = downbright } },
-	{ 0,        XK_Print,                     spawn,     {.v = print } },
+	{ MODKEY,                       XK_s,     spawn,     {.v = suspendcmd } },
+	{ 0,        XF86XK_AudioRaiseVolume,      spawn,     {.v = upvolcmd   } },
+	{ 0,        XF86XK_AudioLowerVolume,      spawn,     {.v = downvolcmd } },
+	{ 0,        XF86XK_AudioMute,             spawn,     {.v = mutevolcmd } },
+	{ 0,        XF86XK_AudioMicMute,          spawn,     {.v = mutemicvolcmd } },
+	{ 0,        XF86XK_MonBrightnessUp,       spawn,     {.v = upbrightcmd } },
+	{ 0,        XF86XK_MonBrightnessDown,     spawn,     {.v = downbrightcmd } },
+	{ 0,        XK_Print,                     spawn,     {.v = printcmd } },
 };
 
 /* button definitions */
