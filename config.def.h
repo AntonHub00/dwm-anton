@@ -9,11 +9,11 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "JetBrains Mono:size=10" };
-static const char col_gray1[]       = "#1d2021";
-static const char col_gray2[]       = "#928374";
-static const char col_gray3[]       = "#ebdbb2";
-static const char col_gray4[]       = "#1d2021";
-static const char col_cyan[]        = "#458588";
+static const char col_gray1[]       = "#2E3440";
+static const char col_gray2[]       = "#4C566A";
+static const char col_gray3[]       = "#D8DEE9";
+static const char col_gray4[]       = "#2E3440";
+static const char col_cyan[]        = "#81A1C1";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
