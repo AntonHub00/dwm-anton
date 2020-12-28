@@ -60,6 +60,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *suspendcmd[]   = { "/usr/bin/systemctl", "suspend", NULL };
+static const char *hibernatecmd[]   = { "/usr/bin/systemctl", "hibernate", NULL };
 static const char *upvolcmd[]   = { "/usr/bin/amixer", "-q", "set", "Master", "5%+", NULL };
 static const char *downvolcmd[] = { "/usr/bin/amixer", "-q", "set", "Master", "5%-", NULL };
 static const char *mutevolcmd[] = { "/usr/bin/amixer", "-q", "set", "Master", "toggle", NULL };
@@ -104,6 +105,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 	{ MODKEY,                       XK_s,     spawn,     {.v = suspendcmd } },
+	{ MODKEY|ShiftMask,             XK_s,     spawn,     {.v = hibernatecmd } },
 	{ 0,        XF86XK_AudioRaiseVolume,      spawn,     {.v = upvolcmd   } },
 	{ 0,        XF86XK_AudioLowerVolume,      spawn,     {.v = downvolcmd } },
 	{ 0,        XF86XK_AudioMute,             spawn,     {.v = mutevolcmd } },
