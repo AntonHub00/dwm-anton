@@ -58,7 +58,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[]      = { "dmenu_run", "-m", dmenumon, NULL };
-static const char *termcmd[]       = { "kitty", NULL };
+static const char *termcmd[]       = { "alacritty", NULL };
 static const char *lockscreencmd[] = { "/home/antonhub/.scripts/i3_lock_rm.sh", NULL };
 static const char *suspendcmd[]    = { "/usr/bin/systemctl", "suspend", NULL };
 static const char *hibernatecmd[]  = { "/usr/bin/systemctl", "hibernate", NULL };
