@@ -70,6 +70,10 @@ static const char *mutemicvolcmd[] = { "/usr/bin/amixer", "-q", "set", "Capture"
 static const char *upbrightcmd[]   = { "/usr/bin/xbacklight", "-inc", "10", NULL };
 static const char *downbrightcmd[] = { "/usr/bin/xbacklight", "-dec", "10", NULL };
 static const char *printcmd[]      = { "/usr/bin/gnome-screenshot", "-i", NULL };
+static const char *playpausecmd[]  = { "/usr/bin/playerctl", "play-pause", NULL };
+static const char *stopcmd[]       = { "/usr/bin/playerctl", "stop", NULL };
+static const char *nextcmd[]       = { "/usr/bin/playerctl", "next", NULL };
+static const char *previouscmd[]   = { "/usr/bin/playerctl", "previous", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -116,6 +120,10 @@ static Key keys[] = {
 	{ 0,        XF86XK_MonBrightnessUp,       spawn,     {.v = upbrightcmd } },
 	{ 0,        XF86XK_MonBrightnessDown,     spawn,     {.v = downbrightcmd } },
 	{ 0,        XK_Print,                     spawn,     {.v = printcmd } },
+	{ 0,        XF86XK_AudioPause,            spawn,     {.v = playpausecmd } },
+	{ 0,        XF86XK_AudioStop,             spawn,     {.v = stopcmd } },
+	{ 0,        XF86XK_AudioNext,             spawn,     {.v = nextcmd } },
+	{ 0,        XF86XK_AudioPrev,             spawn,     {.v = previouscmd } },
 	{ MODKEY|ShiftMask,             XK_m,     spawn,     {.v = mutemicvolcmd } },
 };
 
