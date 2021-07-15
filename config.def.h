@@ -75,6 +75,18 @@ static const char *stopcmd[]       = { "/usr/bin/playerctl", "stop", NULL };
 static const char *nextcmd[]       = { "/usr/bin/playerctl", "next", NULL };
 static const char *previouscmd[]   = { "/usr/bin/playerctl", "previous", NULL };
 
+/* Note: If you have more than one sound device, you must pass the right one to */
+/* amixer for the above amixer related commands to work. */
+
+/* List the available sound cards: */
+/* cat /proc/asound/cards */
+
+/* The number at the left in the output text is the card number.  Lets say you */
+/* want to toggle mute for the sound card 1. You can pass the card number as shown */
+/* below: */
+
+/* /usr/bin/amixer -c 1 -q set Capture toggle */
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
